@@ -18,12 +18,6 @@ namespace :vaccinesignup do
     puts "Deleted #{UserZip.where('user_id != ?', TEST_USER_ID).delete_all} non-test users."
   end
 
-  desc 'Read DMs and, if there are subscribed zip codes, notify users.'
-  task read_and_notify: :environment do
-    results = NotifyBot.call
-    log_notification_results(results) if results && Rails.env.development?
-  end
-
   desc 'Back-up production, restore locally, and delete real users for testing.'
   task reset_staging: :environment do
     Rake::Task['vaccinesignup:back_up'].invoke
